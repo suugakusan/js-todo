@@ -17,12 +17,14 @@ const addTodo = () => {
   // 完了 未着手ボタン
   todoList.appendChild(newTodo);
   const checkButton = document.createElement('button');
+  checkButton.addEventListener('click', switchState);
   checkButton.innerHTML = '□未着手';
   checkButton.classList.add('check-button');
   newTodo.appendChild(checkButton);
 
   // 削除ボタン
   const deleteButton = document.createElement('button');
+  deleteButton.addEventListener('click', deleteTodo);
   deleteButton.innerHTML = '削除';
   deleteButton.classList.add('delete-button');
   newTodo.appendChild(deleteButton);
@@ -33,5 +35,22 @@ const addTodo = () => {
   // 入力フォームの値を消去
   todoInput.value = '';
 };
-
+const switchState = (e) => {
+  let checkButton = e.target;
+  if (!checkButton.classList.contains('complete')) {
+    /* ***** 以下を追加 ***** */
+    checkButton.innerHTML = '完了';
+    /* ***** 以上を追加 ***** */
+    checkButton.classList.add('complete');
+  } else {
+    /* ***** 以下を追加 ***** */
+    checkButton.innerHTML = '□ 未着手';
+    /* ***** 以上を追加 ***** */
+    checkButton.classList.remove('complete');
+  }
+};
+const deleteTodo = (e) => {
+  const todoList = e.target.closest('li');
+  todoList.remove();
+};
 addButton.addEventListener('click', addTodo);
